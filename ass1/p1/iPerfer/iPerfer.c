@@ -18,10 +18,6 @@ void error(const char *msg) {
 }
 
 void server_mode(int port) {
-    if (port < 1024 || port > 65535) {
-        fprintf(stderr, "Error: port number must be in the range [1024, 65535]\n");
-        exit(1);
-    }
 
 //    int sockfd = socket(AF_INET, SOCK_STREAM, 0);
 //    if (sockfd < 0) error("ERROR opening socket");
@@ -39,8 +35,7 @@ void server_mode(int port) {
 //        error("ERROR on binding");
 //
 //    listen(sockfd, 5);
-//    struct sockaddr_in cli_addr;
-//    socklen_t clilen = sizeof(cli_addr);
+//    struct sockaddr_in cli_addr;:
 //    int newsockfd = accept(sockfd, (struct sockaddr *)&cli_addr, &clilen);
 //    if (newsockfd < 0) error("ERROR on accept");
 //
@@ -86,12 +81,40 @@ void server_mode(int port) {
 }
 
 int main(int argc, char *argv[]) {
-    if (argc != 4 || strcmp(argv[1], "-s") != 0 || strcmp(argv[2], "-p") != 0) {
+    // Server mode: ./iPerfer -s -p <port>
+    if (argc == 4 && strcmp(argv[1], "-s") == 0 && strcmp(argv[2], "-p") == 0) {
+        int port = atoi(argv[3]);
+        if (port < 1024 || port > 65535) {
+            fprintf(stderr, "Error: port number must be in the range [1024, 65535]\n");
+            exit(1);
+        }
+        server_mode(port);
+    }
+    // Client mode: ./iPerfer -c -h <hostname> -p <port> -t <time>
+    else if (argc == 8 && strcmp(argv[1], "-c") == 0 && strcmp(argv[2], "-h") == 0 &&
+             strcmp(argv[4], "-p") == 0 && strcmp(argv[6], "-t") == 0) {
+        const char *hostname = argv[3];
+        int port = atoi(argv[5]);
+        int time_duration = atoi(argv[7]);
+
+        if (port < 1024 || port > 65535) {
+            fprintf(stderr, "Error: port number must be in the range [1024, 65535]\n");
+            exit(1);
+        }
+        if (time_duration <= 0) {
+            fprintf(stderr, "Error: time argument must be greater than 0\n");
+            exit(1);
+        }
+
+        client_mode(hostname, port, time_duration);
+    }
+    // Invalid arguments
+    else {
         fprintf(stderr, "Error: missing or extra arguments\n");
+        fprintf(stderr, "Usage for server mode: ./iPerfer -s -p <port>\n");
+        fprintf(stderr, "Usage for client mode: ./iPerfer -c -h <hostname> -p <port> -t <time>\n");
         exit(1);
     }
 
-    int port = atoi(argv[3]);
-    server_mode(port);
     return 0;
 }
