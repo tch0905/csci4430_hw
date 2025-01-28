@@ -18,11 +18,11 @@ void error(const char *msg) {
 }
 
 void server_mode(int port) {
-//    if (port < 1024 || port > 65535) {
-//        fprintf(stderr, "Error: port number must be in the range [1024, 65535]\n");
-//        exit(1);
-//    }
-//
+    if (port < 1024 || port > 65535) {
+        fprintf(stderr, "Error: port number must be in the range [1024, 65535]\n");
+        exit(1);
+    }
+
 //    int sockfd = socket(AF_INET, SOCK_STREAM, 0);
 //    if (sockfd < 0) error("ERROR opening socket");
 //
