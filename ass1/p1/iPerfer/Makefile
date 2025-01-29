@@ -14,7 +14,7 @@ CFLAGS = -Wall -Wextra -pedantic -std=c11
 
 all: iPerfer
 
-SOURCES = iPerfer.c
+SOURCES = iPerfer.cpp
 iPerfer: $(SOURCES)
 	$(CC) $(CFLAGS) $(SOURCES) -o iPerfer
 
