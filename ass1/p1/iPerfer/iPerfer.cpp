@@ -164,29 +164,36 @@ void run_client(const char* hostname, int port, int time_sec) {
 
 int main(int argc, char* argv[]) {
     // Printing all the arguments passed to the program
-    std::cout << "Total arguments: " << argc << std::endl;
-    for (int i = 0; i < argc; ++i) {
-        std::cout << "argv[" << i << "]: " << argv[i] << std::endl;
-    }
-
-
+//    std::cout << "Total arguments: " << argc << std::endl;
+//    for (int i = 0; i < argc; ++i) {
+//        std::cout << "argv[" << i << "]: " << argv[i] << std::endl;
+//    }
+//
+//
+    // handle args
     if (argc < 2 || argc > 8) {
         std::cout << "Error: missing or extra arguments" << std::endl;
         return 1;
     }
 
+    // server mode
     if (strcmp(argv[1], "-s") == 0) {
+
         if (argc != 4 || strcmp(argv[2], "-p") != 0) {
             std::cout << "Error: missing or extra arguments" << std::endl;
             return 1;
         }
+
         int port = atoi(argv[3]);
+
         if (port < 1024 || port > 65535) {
             std::cout << "Error: port number must be in the range of [1024, 65535]" << std::endl;
             return 1;
         }
         run_server(port);
-    } else if (strcmp(argv[1], "-c") == 0) {
+    }
+    // client mode
+    else if (strcmp(argv[1], "-c") == 0) {
         if (argc != 8 || strcmp(argv[2], "-h") != 0 || strcmp(argv[4], "-p") != 0 || strcmp(argv[6], "-t") != 0) {
             std::cout << "Error: missing or extra arguments" << std::endl;
             return 1;
