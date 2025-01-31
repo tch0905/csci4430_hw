@@ -53,6 +53,11 @@ if __name__ == '__main__':
 
     # Run network
     net.start()
+    h1 = net.get('h1')
+    h2 = net.get('h2')
+    h1.cmd('iperf -s &')
+    h2.cmd('iperf -c h1')
+
     CLI( net )
     net.stop()
 
