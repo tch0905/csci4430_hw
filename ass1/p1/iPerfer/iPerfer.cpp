@@ -163,6 +163,13 @@ void run_client(const char* hostname, int port, int time_sec) {
 }
 
 int main(int argc, char* argv[]) {
+    // Printing all the arguments passed to the program
+    std::cout << "Total arguments: " << argc << std::endl;
+    for (int i = 0; i < argc; ++i) {
+        std::cout << "argv[" << i << "]: " << argv[i] << std::endl;
+    }
+
+
     if (argc < 2 || argc > 8) {
         std::cout << "Error: missing or extra arguments" << std::endl;
         return 1;
