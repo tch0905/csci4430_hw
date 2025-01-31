@@ -95,6 +95,7 @@ void run_server(int port) {
     double rate = (total_bytes * 8) / time_taken;
 
     printf("Received=%.0f KB, Rate=%.3f Mbps\n", total_kb, rate);
+    std::cout << "time_taken time: " << time_taken << " seconds" << std::endl;
 
 
 
@@ -163,6 +164,7 @@ void run_client(const char* hostname, int port, int time_sec, clock_t start_time
     double rate = (bytes_sent * 8) / time_taken;
 
     printf("Sent=%.0f KB, Rate=%.3f Mbps\n", total_kb, rate);
+    std::cout << "time_taken time: " << time_taken << " seconds" << std::endl;
 
 
 
