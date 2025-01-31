@@ -10,17 +10,21 @@
 
 void run_server(int port) {
     int sockfd = socket(AF_INET, SOCK_STREAM, 0);
+
+
     if (sockfd < 0) {
         std::cout << "Error opening socket" << std::endl;
         exit(1);
     }
 
     int opt = 1;
+
     if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) < 0) {
         std::cout << "Error setting socket options" << std::endl;
         close(sockfd);
         exit(1);
     }
+
 
     struct sockaddr_in addr;
     memset(&addr, 0, sizeof(addr));
@@ -93,6 +97,16 @@ void run_server(int port) {
 
     printf("Received=%.0f KB, Rate=%.3f Mbps\n", total_kb, rate);
 
+    // testing
+    double elapsed_seconds = (end_time.tv_sec - start_time.tv_sec);
+    double elapsed_microseconds = (end_time.tv_usec - start_time.tv_usec) / 1e6;
+
+    // Print the individual components
+    printf("Elapsed seconds: %.0f\n", elapsed_seconds);
+    printf("Elapsed microseconds: %.6f\n", elapsed_microseconds);
+
+
+
     close(client_sock);
     close(sockfd);
 }
@@ -158,6 +172,15 @@ void run_client(const char* hostname, int port, int time_sec) {
     double rate = (bytes_sent * 8) / (elapsed_total * 1e6);
 
     printf("Sent=%.0f KB, Rate=%.3f Mbps\n", total_kb, rate);
+
+    // testing
+    double elapsed_seconds = (end_time.tv_sec - start_time.tv_sec);
+    double elapsed_microseconds = (end_time.tv_usec - start_time.tv_usec) / 1e6;
+
+    // Print the individual components
+    printf("Elapsed seconds: %.0f\n", elapsed_seconds);
+    printf("Elapsed microseconds: %.6f\n", elapsed_microseconds);
+
 
     close(sockfd);
 }
