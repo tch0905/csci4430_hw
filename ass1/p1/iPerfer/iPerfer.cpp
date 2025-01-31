@@ -173,7 +173,7 @@ void run_client(const char* hostname, int port, int time_sec) {
     double rate = (bytes_sent * 8) / (elapsed_total * 1e6);
 
     printf("Sent=%.0f KB, Rate=%.3f Mbps\n", total_kb, rate);
-    std::cout << "time_taken time: " << time_taken << " seconds" << std::endl;
+    std::cout << "time_taken time: " << elapsed_total << " seconds" << std::endl;
 
 
 
@@ -228,6 +228,7 @@ int main(int argc, char* argv[]) {
             std::cout << "Error: time argument must be greater than 0" << std::endl;
             return 1;
         }
+
         run_client(hostname, port, time);
     } else {
         std::cout << "Error: invalid mode" << std::endl;
