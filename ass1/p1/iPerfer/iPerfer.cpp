@@ -169,7 +169,7 @@ void run_client(const char* hostname, int port, int time_sec) {
     gettimeofday(&end_time, NULL);
     double elapsed_total = (end_time.tv_sec - start_time.tv_sec) + (end_time.tv_usec - start_time.tv_usec) / 1e6;
     double total_kb = bytes_sent / 1024.0;
-    double rate = (total_kb * 8 / 1024.0 / 1024.0) / elapsed_total;
+    double rate = (bytes_sent * 8 / 1024.0 / 1024.0) / elapsed_total;
 
     printf("Sent=%.0f KB, Rate=%.3f Mbps\n", total_kb, rate);
     std::cout << "time_taken time: " << elapsed_total << " seconds" << std::endl;
