@@ -62,7 +62,7 @@ void run_server(int port) {
     bool fin_received = false;
 
     while (!fin_received) {
-        char temp_buf[10000];
+        char temp_buf[1000];
         ssize_t bytes_read = recv(client_sock, temp_buf, sizeof(temp_buf), 0);
         if (bytes_read < 0) {
             std::cout << "Error reading from socket" << std::endl;
@@ -89,6 +89,7 @@ void run_server(int port) {
             }
         }
     }
+
 
     gettimeofday(&end_time, NULL);
     double elapsed = (end_time.tv_sec - start_time.tv_sec) + (end_time.tv_usec - start_time.tv_usec) / 1e6;
@@ -136,7 +137,7 @@ void run_client(const char* hostname, int port, int time_sec) {
         exit(1);
     }
 
-    char data[10000];
+    char data[1000];
     memset(data, 0, sizeof(data));
     timeval start_time, end_time;
     gettimeofday(&start_time, NULL);
