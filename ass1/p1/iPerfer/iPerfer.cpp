@@ -91,10 +91,9 @@ void run_server(int port) {
     }
 
     gettimeofday(&end_time, NULL);
-//    double elapsed = (end_time.tv_sec - start_time.tv_sec) + (end_time.tv_usec - start_time.tv_usec) / 1e6;
-    double elapsed =  (end_time.tv_usec - start_time.tv_usec) / 1e6;
-    double total_kb = total_bytes / 1000.0;
-    double rate = (total_bytes * 8) / (elapsed * 1e6);
+    double elapsed = (end_time.tv_sec - start_time.tv_sec) + (end_time.tv_usec - start_time.tv_usec) / 1e6;
+    double total_kb = total_bytes / 1024.0;
+    double rate = (total_bytes / 1024.0 / 1024.0) / elapsed;
 
     printf("Received=%.0f KB, Rate=%.3f Mbps\n", total_kb, rate);
 
