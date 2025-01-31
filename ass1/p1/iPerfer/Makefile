@@ -1,16 +1,5 @@
-## CSCI 4430 Advanced Makefile
-
-# How to use this Makefile...
-###################
-###################
-##               ##
-##  $ make help  ##
-##               ##
-###################
-###################
-
-CC = gcc
-CFLAGS = -Wall -Wextra -pedantic -std=c11
+CC = g++
+CFLAGS = -Wall -Wextra -pedantic -std=c++11
 
 all: iPerfer
 
