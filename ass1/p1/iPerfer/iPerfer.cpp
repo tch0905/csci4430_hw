@@ -8,6 +8,14 @@
 #include <ctime>
 #include <vector>
 
+
+clock_t start_time; // Global variable
+
+void startClock() {
+    start_time = clock(); // Initialize the clock
+}
+
+
 void run_server(int port) {
     int sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -53,7 +61,7 @@ void run_server(int port) {
         exit(1);
     }
 
-    clock_t start_time = clock();
+//    clock_t start_time = clock();
 
     std::vector<char> buffer;
     const char fin[] = {0x01, 0x02, 0x03, 0x04};
@@ -220,6 +228,7 @@ int main(int argc, char* argv[]) {
             return 1;
         }
         clock_t start_time = clock();
+        startClock();
         run_client(hostname, port, time, start_time);
     } else {
         std::cout << "Error: invalid mode" << std::endl;
