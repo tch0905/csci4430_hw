@@ -91,8 +91,8 @@ void run_server(int port) {
 
     clock_t end_time = clock();
     double time_taken = (double)(end_time - start_time) / CLOCKS_PER_SEC;
-    double total_kb = total_bytes / 1000.0;
-    double rate = (total_bytes * 8) / time_taken;
+    double total_kb = total_bytes / 1024.0;
+    double rate = total_bytes/1024.0 / time_taken;
 
     printf("Received=%.0f KB, Rate=%.3f Mbps\n", total_kb, rate);
     std::cout << "time_taken time: " << time_taken << " seconds" << std::endl;
@@ -160,8 +160,8 @@ void run_client(const char* hostname, int port, int time_sec, clock_t start_time
 
     clock_t end_time = clock();
     double time_taken = (double)(end_time - start_time) / 1000;
-    double total_kb = bytes_sent / 1000.0;
-    double rate = (bytes_sent * 8) / time_taken;
+    double total_kb = bytes_sent / 1024.0;
+    double rate = total_bbytes_sentytes/1024.0 / time_taken;
 
     printf("Sent=%.0f KB, Rate=%.3f Mbps\n", total_kb, rate);
     std::cout << "time_taken time: " << time_taken << " seconds" << std::endl;
