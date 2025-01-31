@@ -103,7 +103,7 @@ void run_server(int port) {
     close(sockfd);
 }
 
-void run_client(const char* hostname, int port, int time_sec) {
+void run_client(const char* hostname, int port, int time_sec, clock_t start_time) {
     struct hostent* server = gethostbyname(hostname);
     if (!server) {
         std::cout << "Error resolving hostname" << std::endl;
@@ -130,7 +130,7 @@ void run_client(const char* hostname, int port, int time_sec) {
 
     char data[10000];
     memset(data, 0, sizeof(data));
-    clock_t start_time = clock();
+
     long bytes_sent = 0;
 
     bool sending = true;
@@ -217,7 +217,8 @@ int main(int argc, char* argv[]) {
             std::cout << "Error: time argument must be greater than 0" << std::endl;
             return 1;
         }
-        run_client(hostname, port, time);
+        clock_t start_time = clock();
+        run_client(hostname, port, time, start_time);
     } else {
         std::cout << "Error: invalid mode" << std::endl;
         return 1;
