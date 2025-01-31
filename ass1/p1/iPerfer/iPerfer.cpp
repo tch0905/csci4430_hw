@@ -171,7 +171,7 @@ int main(int argc, char* argv[]) {
 //
 //
     // handle args
-    if !(argc == 4 || argc == 8) {
+    if (!(argc == 4 || argc == 8)) {
         std::cout << "Error: missing or extra arguments" << std::endl;
         return 1;
     }
