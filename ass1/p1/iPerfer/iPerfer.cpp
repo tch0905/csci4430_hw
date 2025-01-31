@@ -154,7 +154,7 @@ void run_client(const char* hostname, int port, int time_sec) {
             break;
         }
 
-        ssize_t sent = send(sockfd, data, sizeof(data), 0);
+        int sent = send(sockfd, data, sizeof(data), 0);
         if (sent < 0) {
             std::cout << "Error sending data" << std::endl;
             break;
