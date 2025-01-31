@@ -136,7 +136,7 @@ void run_client(const char* hostname, int port, int time_sec) {
     bool sending = true;
     while (sending) {
         clock_t current_time = clock();
-        double elapsed = current_time - start_time / CLOCKS_PER_SEC;;
+        double elapsed =  (double)(current_time - start_time) / CLOCKS_PER_SEC;
         if (elapsed >= time_sec) {
             sending = false;
             break;
