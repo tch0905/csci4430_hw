@@ -137,7 +137,7 @@ void run_client(const char* hostname, int port, int time_sec, clock_t start_time
     while (sending) {
         clock_t current_time = clock();
         double elapsed =  (double)(current_time - start_time) / 1000;
-        std::cout << "Elapsed time: " << elapsed << " seconds" << std::endl;
+//        std::cout << "Elapsed time: " << elapsed << " seconds" << std::endl;
         if (elapsed >=  (double)time_sec) {
             sending = false;
             break;
