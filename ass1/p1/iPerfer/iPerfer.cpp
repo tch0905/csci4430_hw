@@ -227,7 +227,6 @@ int main(int argc, char* argv[]) {
             std::cout << "Error: time argument must be greater than 0" << std::endl;
             return 1;
         }
-        clock_t start_time = clock();
         startClock();
         run_client(hostname, port, time);
     } else {
