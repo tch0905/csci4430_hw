@@ -91,7 +91,9 @@ void run_server(int port) {
     }
 
     gettimeofday(&end_time, NULL);
-    double elapsed = (end_time.tv_sec - start_time.tv_sec) + (end_time.tv_usec - start_time.tv_usec) / 1e6;
+    double elapsed =
+//            (end_time.tv_sec - start_time.tv_sec) +
+            (end_time.tv_usec - start_time.tv_usec) / 1e6;
     double total_kb = total_bytes / 1000.0;
     double rate = (total_bytes * 8) / (elapsed * 1e6);
 
@@ -167,7 +169,9 @@ void run_client(const char* hostname, int port, int time_sec) {
     recv(sockfd, ack, 4, 0);
 
     gettimeofday(&end_time, NULL);
-    double elapsed_total = (end_time.tv_sec - start_time.tv_sec) + (end_time.tv_usec - start_time.tv_usec) / 1e6;
+    double elapsed_total =
+//            (end_time.tv_sec - start_time.tv_sec) +
+            (end_time.tv_usec - start_time.tv_usec) / 1e6;
     double total_kb = bytes_sent / 1000.0;
     double rate = (bytes_sent * 8) / (elapsed_total * 1e6);
 
