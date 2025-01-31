@@ -11,13 +11,13 @@
 void run_server(int port) {
     int sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd < 0) {
-        std::cerr << "Error opening socket" << std::endl;
+        std::cout << "Error opening socket" << std::endl;
         exit(1);
     }
 
     int opt = 1;
     if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) < 0) {
-        std::cerr << "Error setting socket options" << std::endl;
+        std::cout << "Error setting socket options" << std::endl;
         close(sockfd);
         exit(1);
     }
@@ -29,13 +29,13 @@ void run_server(int port) {
     addr.sin_port = htons(port);
 
     if (bind(sockfd, (struct sockaddr*)&addr, sizeof(addr)) < 0) {
-        std::cerr << "Error binding socket" << std::endl;
+        std::cout << "Error binding socket" << std::endl;
         close(sockfd);
         exit(1);
     }
 
     if (listen(sockfd, 1) < 0) {
-        std::cerr << "Error listening on socket" << std::endl;
+        std::cout << "Error listening on socket" << std::endl;
         close(sockfd);
         exit(1);
     }
@@ -44,7 +44,7 @@ void run_server(int port) {
     socklen_t client_len = sizeof(client_addr);
     int client_sock = accept(sockfd, (struct sockaddr*)&client_addr, &client_len);
     if (client_sock < 0) {
-        std::cerr << "Error accepting connection" << std::endl;
+        std::cout << "Error accepting connection" << std::endl;
         close(sockfd);
         exit(1);
     }
@@ -61,7 +61,7 @@ void run_server(int port) {
         char temp_buf[1000];
         ssize_t bytes_read = recv(client_sock, temp_buf, sizeof(temp_buf), 0);
         if (bytes_read < 0) {
-            std::cerr << "Error reading from socket" << std::endl;
+            std::cout << "Error reading from socket" << std::endl;
             break;
         } else if (bytes_read == 0) {
             break;
@@ -100,13 +100,13 @@ void run_server(int port) {
 void run_client(const char* hostname, int port, int time_sec) {
     struct hostent* server = gethostbyname(hostname);
     if (!server) {
-        std::cerr << "Error resolving hostname" << std::endl;
+        std::cout << "Error resolving hostname" << std::endl;
         exit(1);
     }
 
     int sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd < 0) {
-        std::cerr << "Error opening socket" << std::endl;
+        std::cout << "Error opening socket" << std::endl;
         exit(1);
     }
 
@@ -117,7 +117,7 @@ void run_client(const char* hostname, int port, int time_sec) {
     memcpy(&addr.sin_addr.s_addr, server->h_addr, server->h_length);
 
     if (connect(sockfd, (struct sockaddr*)&addr, sizeof(addr)) < 0) {
-        std::cerr << "Error connecting to server" << std::endl;
+        std::cout << "Error connecting to server" << std::endl;
         close(sockfd);
         exit(1);
     }
@@ -140,7 +140,7 @@ void run_client(const char* hostname, int port, int time_sec) {
 
         ssize_t sent = send(sockfd, data, sizeof(data), 0);
         if (sent < 0) {
-            std::cerr << "Error sending data" << std::endl;
+            std::cout << "Error sending data" << std::endl;
             break;
         }
         bytes_sent += sent;
@@ -163,41 +163,41 @@ void run_client(const char* hostname, int port, int time_sec) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc < 2) {
-        std::cerr << "Error: missing or extra arguments" << std::endl;
+    if (argc < 2 || argc > 8) {
+        std::cout << "Error: missing or extra arguments" << std::endl;
         return 1;
     }
 
     if (strcmp(argv[1], "-s") == 0) {
         if (argc != 4 || strcmp(argv[2], "-p") != 0) {
-            std::cerr << "Error: missing or extra arguments" << std::endl;
+            std::cout << "Error: missing or extra arguments" << std::endl;
             return 1;
         }
         int port = atoi(argv[3]);
         if (port < 1024 || port > 65535) {
-            std::cerr << "Error: port number must be in the range of [1024, 65535]" << std::endl;
+            std::cout << "Error: port number must be in the range of [1024, 65535]" << std::endl;
             return 1;
         }
         run_server(port);
     } else if (strcmp(argv[1], "-c") == 0) {
         if (argc != 8 || strcmp(argv[2], "-h") != 0 || strcmp(argv[4], "-p") != 0 || strcmp(argv[6], "-t") != 0) {
-            std::cerr << "Error: missing or extra arguments" << std::endl;
+            std::cout << "Error: missing or extra arguments" << std::endl;
             return 1;
         }
         const char* hostname = argv[3];
         int port = atoi(argv[5]);
         if (port < 1024 || port > 65535) {
-            std::cerr << "Error: port number must be in the range of [1024, 65535]" << std::endl;
+            std::cout << "Error: port number must be in the range of [1024, 65535]" << std::endl;
             return 1;
         }
         int time = atoi(argv[7]);
         if (time <= 0) {
-            std::cerr << "Error: time argument must be greater than 0" << std::endl;
+            std::cout << "Error: time argument must be greater than 0" << std::endl;
             return 1;
         }
         run_client(hostname, port, time);
     } else {
-        std::cerr << "Error: invalid mode" << std::endl;
+        std::cout << "Error: invalid mode" << std::endl;
         return 1;
     }
 
