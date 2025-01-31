@@ -5,16 +5,8 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <netdb.h>
-#include <ctime>
+#include <sys/time.h>
 #include <vector>
-
-
-clock_t start_time; // Global variable
-
-void startClock() {
-    start_time = clock(); // Initialize the clock
-}
-
 
 void run_server(int port) {
     int sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -61,7 +53,8 @@ void run_server(int port) {
         exit(1);
     }
 
-//    clock_t start_time = clock();
+    timeval start_time, end_time;
+    gettimeofday(&start_time, NULL);
 
     std::vector<char> buffer;
     const char fin[] = {0x01, 0x02, 0x03, 0x04};
@@ -70,7 +63,7 @@ void run_server(int port) {
 
     while (!fin_received) {
         char temp_buf[10000];
-        int bytes_read = recv(client_sock, temp_buf, sizeof(temp_buf), 0);
+        ssize_t bytes_read = recv(client_sock, temp_buf, sizeof(temp_buf), 0);
         if (bytes_read < 0) {
             std::cout << "Error reading from socket" << std::endl;
             break;
@@ -97,14 +90,21 @@ void run_server(int port) {
         }
     }
 
-    clock_t end_time = clock();
-    double time_taken = (double)(end_time - start_time) / CLOCKS_PER_SEC;
-    double total_kb = total_bytes / 1024.0;
-    double rate = total_bytes/1024.0 / time_taken;
+    gettimeofday(&end_time, NULL);
+//    double elapsed = (end_time.tv_sec - start_time.tv_sec) + (end_time.tv_usec - start_time.tv_usec) / 1e6;
+    double elapsed =  (end_time.tv_usec - start_time.tv_usec) / 1e6;
+    double total_kb = total_bytes / 1000.0;
+    double rate = (total_bytes * 8) / (elapsed * 1e6);
 
     printf("Received=%.0f KB, Rate=%.3f Mbps\n", total_kb, rate);
-    std::cout << "time_taken time: " << time_taken << " seconds" << std::endl;
 
+    // testing
+    double elapsed_seconds = (end_time.tv_sec - start_time.tv_sec);
+    double elapsed_microseconds = (end_time.tv_usec - start_time.tv_usec) / 1e6;
+
+    // Print the individual components
+    printf("Elapsed seconds: %.0f\n", elapsed_seconds);
+    printf("Elapsed microseconds: %.6f\n", elapsed_microseconds);
 
 
 
@@ -139,20 +139,21 @@ void run_client(const char* hostname, int port, int time_sec) {
 
     char data[10000];
     memset(data, 0, sizeof(data));
-
+    timeval start_time, end_time;
+    gettimeofday(&start_time, NULL);
     long bytes_sent = 0;
 
     bool sending = true;
     while (sending) {
-        clock_t current_time = clock();
-        double elapsed =  (double)(current_time - start_time) / 1000;
-        std::cout << "Elapsed time: " << elapsed << " seconds" << std::endl;
-        if (elapsed >=  (double)time_sec) {
+        timeval current_time;
+        gettimeofday(&current_time, NULL);
+        double elapsed = (current_time.tv_sec - start_time.tv_sec) + (current_time.tv_usec - start_time.tv_usec) / 1e6;
+        if (elapsed >= time_sec) {
             sending = false;
             break;
         }
 
-        int sent = send(sockfd, data, sizeof(data), 0);
+        ssize_t sent = send(sockfd, data, sizeof(data), 0);
         if (sent < 0) {
             std::cout << "Error sending data" << std::endl;
             break;
@@ -166,10 +167,10 @@ void run_client(const char* hostname, int port, int time_sec) {
     char ack[4];
     recv(sockfd, ack, 4, 0);
 
-    clock_t end_time = clock();
-    double time_taken = (double)(end_time - start_time) / 1000;
-    double total_kb = bytes_sent / 1024.0;
-    double rate = bytes_sent/1024.0 / time_taken;
+    gettimeofday(&end_time, NULL);
+    double elapsed_total = (end_time.tv_sec - start_time.tv_sec) + (end_time.tv_usec - start_time.tv_usec) / 1e6;
+    double total_kb = bytes_sent / 1000.0;
+    double rate = (bytes_sent * 8) / (elapsed_total * 1e6);
 
     printf("Sent=%.0f KB, Rate=%.3f Mbps\n", total_kb, rate);
     std::cout << "time_taken time: " << time_taken << " seconds" << std::endl;
@@ -227,7 +228,6 @@ int main(int argc, char* argv[]) {
             std::cout << "Error: time argument must be greater than 0" << std::endl;
             return 1;
         }
-        startClock();
         run_client(hostname, port, time);
     } else {
         std::cout << "Error: invalid mode" << std::endl;
