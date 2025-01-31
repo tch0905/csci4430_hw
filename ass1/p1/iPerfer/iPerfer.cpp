@@ -96,13 +96,6 @@ void run_server(int port) {
 
     printf("Received=%.0f KB, Rate=%.3f Mbps\n", total_kb, rate);
 
-    // testing
-    double elapsed_seconds = (end_time.tv_sec - start_time.tv_sec);
-    double elapsed_microseconds = (end_time.tv_usec - start_time.tv_usec) / 1e6;
-
-    // Print the individual components
-//    printf("Elapsed seconds: %.0f\n", elapsed_seconds);
-//    printf("Elapsed microseconds: %.6f\n", elapsed_microseconds);
 
 
 
@@ -170,9 +163,6 @@ void run_client(const char* hostname, int port, int time_sec) {
 
     printf("Sent=%.0f KB, Rate=%.3f Mbps\n", total_kb, rate);
 
-    // testing
-    double elapsed_seconds = (end_time.tv_sec - start_time.tv_sec);
-    double elapsed_microseconds = (end_time.tv_usec - start_time.tv_usec) / 1e6;
 
     // Print the individual components
 //    printf("Elapsed seconds: %.0f\n", elapsed_seconds);
