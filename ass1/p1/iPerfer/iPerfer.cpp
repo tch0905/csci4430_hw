@@ -136,7 +136,7 @@ void run_client(const char* hostname, int port, int time_sec) {
     bool sending = true;
     while (sending) {
         clock_t current_time = clock();
-        double elapsed = current_time - start_time;
+        double elapsed = current_time - start_time / CLOCKS_PER_SEC;;
         if (elapsed >= time_sec) {
             sending = false;
             break;
@@ -164,9 +164,6 @@ void run_client(const char* hostname, int port, int time_sec) {
     printf("Sent=%.0f KB, Rate=%.3f Mbps\n", total_kb, rate);
 
 
-    // Print the individual components
-//    printf("Elapsed seconds: %.0f\n", elapsed_seconds);
-//    printf("Elapsed microseconds: %.6f\n", elapsed_microseconds);
 
 
     close(sockfd);
