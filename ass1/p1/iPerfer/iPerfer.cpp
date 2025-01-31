@@ -53,8 +53,7 @@ void run_server(int port) {
         exit(1);
     }
 
-    timeval start_time, end_time;
-    gettimeofday(&start_time, NULL);
+    clock_t start_time = clock();
 
     std::vector<char> buffer;
     const char fin[] = {0x01, 0x02, 0x03, 0x04};
@@ -90,12 +89,10 @@ void run_server(int port) {
         }
     }
 
-    gettimeofday(&end_time, NULL);
-    double elapsed =
-            (end_time.tv_sec - start_time.tv_sec) +
-            (end_time.tv_usec - start_time.tv_usec) / 1e6;
+    clock_t end_time = clock();
+    double time_taken = (double)(end_time - start_time) / CLOCKS_PER_SEC;
     double total_kb = total_bytes / 1000.0;
-    double rate = (total_bytes * 8) / (elapsed * 1e6);
+    double rate = (total_bytes * 8) / time_taken;
 
     printf("Received=%.0f KB, Rate=%.3f Mbps\n", total_kb, rate);
 
@@ -140,15 +137,13 @@ void run_client(const char* hostname, int port, int time_sec) {
 
     char data[10000];
     memset(data, 0, sizeof(data));
-    timeval start_time, end_time;
-    gettimeofday(&start_time, NULL);
+    clock_t start_time = clock();
     long bytes_sent = 0;
 
     bool sending = true;
     while (sending) {
-        timeval current_time;
-        gettimeofday(&current_time, NULL);
-        double elapsed = (current_time.tv_sec - start_time.tv_sec) + (current_time.tv_usec - start_time.tv_usec) / 1e6;
+        clock_t current_time = clock();
+        double elapsed = current_time - start_time;
         if (elapsed >= time_sec) {
             sending = false;
             break;
@@ -168,12 +163,10 @@ void run_client(const char* hostname, int port, int time_sec) {
     char ack[4];
     recv(sockfd, ack, 4, 0);
 
-    gettimeofday(&end_time, NULL);
-    double elapsed_total =
-            (end_time.tv_sec - start_time.tv_sec) +
-            (end_time.tv_usec - start_time.tv_usec) / 1e6;
+    clock_t end_time = clock();
+    double time_taken = (double)(end_time - start_time) / CLOCKS_PER_SEC;
     double total_kb = bytes_sent / 1000.0;
-    double rate = (bytes_sent * 8) / (elapsed_total * 1e6);
+    double rate = (bytes_sent * 8) / time_taken;
 
     printf("Sent=%.0f KB, Rate=%.3f Mbps\n", total_kb, rate);
 
