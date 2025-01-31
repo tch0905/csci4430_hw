@@ -112,7 +112,7 @@ void run_server(int port) {
     close(sockfd);
 }
 
-void run_client(const char* hostname, int port, int time_sec, clock_t start_time) {
+void run_client(const char* hostname, int port, int time_sec) {
     struct hostent* server = gethostbyname(hostname);
     if (!server) {
         std::cout << "Error resolving hostname" << std::endl;
@@ -146,7 +146,7 @@ void run_client(const char* hostname, int port, int time_sec, clock_t start_time
     while (sending) {
         clock_t current_time = clock();
         double elapsed =  (double)(current_time - start_time) / 1000;
-//        std::cout << "Elapsed time: " << elapsed << " seconds" << std::endl;
+        std::cout << "Elapsed time: " << elapsed << " seconds" << std::endl;
         if (elapsed >=  (double)time_sec) {
             sending = false;
             break;
@@ -229,7 +229,7 @@ int main(int argc, char* argv[]) {
         }
         clock_t start_time = clock();
         startClock();
-        run_client(hostname, port, time, start_time);
+        run_client(hostname, port, time);
     } else {
         std::cout << "Error: invalid mode" << std::endl;
         return 1;
