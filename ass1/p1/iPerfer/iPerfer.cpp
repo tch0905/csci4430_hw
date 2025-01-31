@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <netdb.h>
-#include <time.h>
+#include <ctime>
 #include <vector>
 
 void run_server(int port) {
