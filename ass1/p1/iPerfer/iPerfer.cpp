@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <netdb.h>
-#include <sys/time.h>
+#include <time.h>
 #include <vector>
 
 void run_server(int port) {
@@ -63,7 +63,7 @@ void run_server(int port) {
 
     while (!fin_received) {
         char temp_buf[10000];
-        ssize_t bytes_read = recv(client_sock, temp_buf, sizeof(temp_buf), 0);
+        int bytes_read = recv(client_sock, temp_buf, sizeof(temp_buf), 0);
         if (bytes_read < 0) {
             std::cout << "Error reading from socket" << std::endl;
             break;
