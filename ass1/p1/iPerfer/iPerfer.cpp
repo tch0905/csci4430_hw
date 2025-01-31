@@ -136,7 +136,7 @@ void run_client(const char* hostname, int port, int time_sec, clock_t start_time
     bool sending = true;
     while (sending) {
         clock_t current_time = clock();
-        double elapsed =  (double)(current_time - start_time) / CLOCKS_PER_SEC;
+        double elapsed =  (double)(current_time - start_time) / 1000;
         std::cout << "Elapsed time: " << elapsed << " seconds" << std::endl;
         if (elapsed >=  (double)time_sec) {
             sending = false;
@@ -158,7 +158,7 @@ void run_client(const char* hostname, int port, int time_sec, clock_t start_time
     recv(sockfd, ack, 4, 0);
 
     clock_t end_time = clock();
-    double time_taken = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+    double time_taken = (double)(end_time - start_time) / 1000;
     double total_kb = bytes_sent / 1000.0;
     double rate = (bytes_sent * 8) / time_taken;
 
