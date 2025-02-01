@@ -2,24 +2,25 @@
       Predicted latency: 120ms
       Actual throughput: 18.2 Mbits/sec
       Actual latency: 132.441ms
-      Explanation of results:
+      Explanation of results: Throughput is limited by the lowest single link bandwidth where throughput will be slightly lower than expect because of network overhead. Latency is equal to the sum of the path of the link's latencies, slightly lower than expect may because of transmission delay.
 
 3.1)  Predicted throughput: 10 Mbits/sec
       Predicted latency: 120ms
-      Actual throughput: 7.5  8.33
-      Actual latency: 146.099 137.791
-      Explanation of results:
+      Actual throughput: 7.5 Mbits/sec 8.33Mbits/sec
+      Actual latency: 146.099ms 137.791ms
+      Explanation of results: The throughput is halved as expected due to multiplexing, where two pairs of hosts share the available bandwidth. The predicted throughput was 10 Mbits/sec (half of the single-pair throughput). The actual latency is higher than the predicted latency due to increased queuing delays and contention as multiple flows compete for bandwidth on the shared links.
 
 3.2)  Predicted throughput: 6.667 Mbits/sec
       Predicted latency: 120ms
-      Actual throughput:
-      Actual latency: 140.193 132.650 135.202
-      Explanation of results:
+      Actual throughput: 4.38 Mbits/sec 6.86 Mbits/sec 3.80 Mbits/sec
+      Actual latency: 140.193ms 132.650ms 135.202ms
+      Explanation of results: The throughput is divided by three as expected due to multiplexing, where three pairs of hosts share the available bandwidth. The predicted throughput was 6.667 Mbits/sec (one-third of the single-pair throughput). The variation in throughput between the pairs is due to uneven distribution of network resources, contention, and queuing delays as multiple flows compete for bandwidth on the shared links. The measured latency  is higher than the predicted latency due to increased queuing delays and network congestion.
 
-4)    Predicted throughput:
-      Predicted latency:
+4)    Predicted throughput: 12.5 Mbits/sec
+      Predicted latency: h1-h9: 120 ms, h3-h8: 30 ms
       Actual throughput: h3-h8: 10.3 Mbits/sec h1-h9: 12.1 Mbits/sec
-      Actual latency: h3-h8:44.265 h1-h9: 126.672
-      Explanation of results:
+      Actual latency: h1-h9: 126.672ms h3-h8:44.265ms
+      Explanation of results: The predicted throughput for each pair was 12.5 Mbits/sec, assuming equal sharing of the available bandwidth which is 25 Mbits/ser /2 due to the max bandwidth of the link that sharing. The slightly lower throughput is likely due to contention and queuing delays on shared links. The latency of h1-h9 will be higher because the path and the time need to pass the link is higher than h3-h8. Due to queuing delays and network congestion, the actual latency will be higher than expected.
 
-5)    Explanation of results:
+5)    Explanation of results: The differences in RTT arise from geographical distance. Hong Kong servers (latency_HK.txt) had the lowest latency (~5ms) due to proximity. Mainland China showed moderate latency  due to cross-border routing. The USA (latency_USA.txt) had the highest latency due to trans-Pacific transmission.
+
