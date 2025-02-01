@@ -52,21 +52,7 @@ if __name__ == '__main__':
            autoStaticArp=True)
 
     # Run network
-    net.start()
-    h1 = net.get('h1')
-    h2 = net.get('h2')
 
-    iperf_client_output = net.iperf( (h1, h2) )
-    #
-    # iperf_server_output = h1.cmd('iperf -s &')
-    # iperf_client_output = h2.cmd('iperf -c h1')
-
-    # print("iPerf server Output:")
-    # print(iperf_server_output)
-
-
-    print("iPerf Client Output:")
-    print(iperf_client_output)
     CLI( net )
     net.stop()
 

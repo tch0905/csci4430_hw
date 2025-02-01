@@ -1,25 +1,25 @@
-2)    Predicted throughput:
-      Predicted latency:
-      Actual throughput:
-      Actual latency:
+2)    Predicted throughput: 20 Mbits/sec
+      Predicted latency: 120ms
+      Actual throughput: 18.2 Mbits/sec
+      Actual latency: 132.441ms
       Explanation of results:
 
-3.1)  Predicted throughput:
-      Predicted latency:
-      Actual throughput:
-      Actual latency:
+3.1)  Predicted throughput: 10 Mbits/sec
+      Predicted latency: 120ms
+      Actual throughput: 7.5  8.33
+      Actual latency: 146.099 137.791
       Explanation of results:
 
-3.2)  Predicted throughput:
-      Predicted latency:
+3.2)  Predicted throughput: 6.667 Mbits/sec
+      Predicted latency: 120ms
       Actual throughput:
-      Actual latency:
+      Actual latency: 140.193 132.650 135.202
       Explanation of results:
 
 4)    Predicted throughput:
       Predicted latency:
-      Actual throughput:
-      Actual latency:
+      Actual throughput: h3-h8: 10.3 Mbits/sec h1-h9: 12.1 Mbits/sec
+      Actual latency: h3-h8:44.265 h1-h9: 126.672
       Explanation of results:
 
 5)    Explanation of results:
