@@ -52,7 +52,7 @@ if __name__ == '__main__':
            autoStaticArp=True)
 
     # Run network
-
+    net.start()
     CLI( net )
     net.stop()
 
