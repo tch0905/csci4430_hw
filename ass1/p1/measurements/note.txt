@@ -6,9 +6,3 @@ Throughput = 25MB * 8 / (2s + 1.28333s) = 60.9 Mbps
 Q1:
 
 L1:
-    RTT =  2*40ms
-    bw = 20 Mbs
-    # = 20
-    total bytes = 20 * 64 = 1280 bytes
-    1280 bytes / 20 Mbs = 1280 * 8 / 20 / 1024 / 1024  =
-    transmission delay = 64
