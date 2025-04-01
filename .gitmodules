@@ -1,0 +1,6 @@
+[submodule "Reliable_Transport_And_Static_Router"]
+	path = Reliable_Transport_And_Static_Router
+	url = https://github.com/tch0905/Reliable_Transport_And_Static_Router.git
+[submodule "Adaptive_And_Load_Balanced_Video_Streaming_CDN"]
+	path = Adaptive_And_Load_Balanced_Video_Streaming_CDN
+	url = https://github.com/kk9uk/Adaptive_And_Load_Balanced_Video_Streaming_CDN.git
